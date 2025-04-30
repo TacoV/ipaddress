@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My IP Address</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <p>Your IP address is</p>
+  <h1 id="ip">Loading...</h1>
+  <h1 onclick="navigator.clipboard.writeText(ip)">...</h1>
+  <p>Click to copy to clipboard</p>
+
+  <script>
+    let ip = ''
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        ip = data.ip
+        document.getElementById('ip').textContent = ip;
+        document.title = 'IP: ' + ip;
+      })
+      .catch(error => {
+        console.error('Error fetching IP:', error);
+        document.getElementById('ip').textContent = 'Unable to fetch IP';
+      });
+  </script>
+</body>
+</html>
